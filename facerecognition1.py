@@ -18,13 +18,13 @@ import pickle
 parser = argparse.ArgumentParser(description='Easy Facial Recognition App')
 parser.add_argument('-i', '--input', type=str, required=True, help='directory of input known faces')
 
-print('[INFO] Starting System...')
-print('[INFO] Importing pretrained model..')
+print('Démarrage du système')
+print("[INFO] Importation d'un modèle pré-entraîné..")
 #pose_predictor_5_point = dlib.shape_predictor("shape_predictor_5_face_landmarks.dat")
 pose_predictor_68_point = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
 face_encoder = dlib.face_recognition_model_v1("dlib_face_recognition_resnet_model_v1.dat")
 face_detector = dlib.get_frontal_face_detector()
-print('[INFO] Importing pretrained model..')
+print("[INFO] Importation d'un modèle pré-entraîné..")
 
 
 def transform(image, face_locations):
@@ -99,22 +99,22 @@ if __name__ == '__main__':
     choice = input('*****menu***** \n 1 => camera\n 2 => local image \n 0 => exit \n')
     if choice ==0: exit()
     # load the model from disk
-    print('[INFO] Faces well imported')
+    print('[INFO] bien importés')
     known_face_encodings = pickle.load(open('known_face_encodings', 'rb'))
     known_face_names = pickle.load(open('known_face_names', 'rb'))
-    print('[INFO] Faces well imported')
+    print('[INFO] bien importés')
 
     if choice == '2':
         img = cv2.imread("input/WIN_20221027_10_31_31_Pro.jpg")
         easy_face_reco(img, known_face_encodings, known_face_names , True)
     elif choice == '1':
-        print('[INFO] Starting Webcam...')
+        print('[INFO] Démarrage de la webcam...')
         video_capture = cv2.VideoCapture(0)
         if not video_capture.isOpened():
-            print("[Error] Cannot open camera")
+            print("[Erreur] Impossible d'ouvrir l'appareil photo")
             exit()
-        print('[INFO] Webcam well started')
-        print('[INFO] Detecting...')
+        print('[INFO] Webcam bien démarrée')
+        print('[INFO] Détection...')
         a =1
         while True:
             a+=1
@@ -122,7 +122,7 @@ if __name__ == '__main__':
             ret, frame = video_capture.read()
                 # if frame is read correctly ret is True
             if not ret:
-                print("Can't receive frame (stream end?). Exiting ...")
+                print("Impossible de recevoir la trame (fin du flux ?). Sortie ...")
                 break
             easy_face_reco(frame, known_face_encodings, known_face_names)
             cv2.imshow('Facial Recognition App', frame)
@@ -130,8 +130,7 @@ if __name__ == '__main__':
                 print('waitKey')
                 print(cv2.waitKey(1) & 0xFF == ord('q'))
                 break
-        print('[INFO] Stopping System')
+        print('[INFO] Arrêt du système')
         video_capture.release()
         cv2.destroyAllWindows()
    
-"""# New Section"""

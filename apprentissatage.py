@@ -7,16 +7,19 @@ import os
 import ntpath
 import pickle 
 
-
+#dlib librairies pour faire de la reconnaissance faciale
 if __name__ == '__main__':
 
-    print('[INFO] running FIT program..')
-    print('[INFO] Importing pretrained model..')
+    print("[INFO] programme FIT en cours d'exécution..")
+    print("[INFO] Importation d'un modèle pré-entraîné..")
     #pose_predictor_5_point = dlib.shape_predictor("shape_predictor_5_face_landmarks.dat")
     pose_predictor_68_point = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
     face_encoder = dlib.face_recognition_model_v1("dlib_face_recognition_resnet_model_v1.dat")
     face_detector = dlib.get_frontal_face_detector()
-    print('[INFO] Importing pretrained model..')
+    print("[INFO] Importation d'un modèle pré-entraîné..")
+
+    #detection de visage
+    #retourn une liste de coordonnées des visages sur l'image
 
     def encode_face(image):
         face_locations = face_detector(image, 1)
@@ -41,7 +44,7 @@ if __name__ == '__main__':
         return coord_faces
 
 
-    print('[INFO] Importing faces...')
+    print("[INFO] Importation de visages...")
     face_to_encode_path = Path('known_faces' )
     print(face_to_encode_path.exists == True)
     files = [file_ for file_ in face_to_encode_path.rglob('*.jpg')]
@@ -49,7 +52,7 @@ if __name__ == '__main__':
     for file_ in face_to_encode_path.rglob('*.png'):
         files.append(file_)
     if len(files)==0:
-        raise ValueError('No faces detect in the directory: {}'.format(face_to_encode_path))
+        raise ValueError('Aucun visage détecté dans le répertoire: {}'.format(face_to_encode_path))
     known_face_names = [os.path.splitext(ntpath.basename(file_))[0] for file_ in files]
 
     known_face_encodings = []
