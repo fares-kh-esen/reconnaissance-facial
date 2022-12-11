@@ -35,7 +35,8 @@ def transform(image, face_locations):
         coord_faces.append(coord_face)
     return coord_faces
 
-
+#compute_face_descriptor calculer un vecteur de 128 deux dimensions, qui va décrire le visage
+#shape_to_np récuper les 68 point qui permettent de décrire le visage sous forme de coordonnées pour pouvoir les détecter
 def encode_face(image):
     face_locations = face_detector(image, 1)
     face_encodings_list = []
@@ -60,7 +61,7 @@ def easy_face_reco(frame, known_face_encodings, known_face_names , image = False
     for face_encoding in face_encodings_list:
         if len(face_encoding) == 0:
             return np.empty((0))
-        # CHECK DISTANCE BETWEEN KNOWN FACES AND FACES DETECTED
+        # récupérer le visage le plus proche que est connu, du visage qui vient d'ètre détécter 
         vectors = np.linalg.norm(known_face_encodings - face_encoding, axis=1)
         tolerance = 0.6
         result = []
